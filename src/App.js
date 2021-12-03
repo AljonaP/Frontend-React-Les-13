@@ -10,6 +10,7 @@ import {
     Switch,
     Route, NavLink,
 } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 
 // [x]   STAPPENPLAN PAGINA COMPONENT MAKEN
@@ -36,20 +37,23 @@ function App() {
   const [isAuthenticated, toggleIsAuthenticated ] = useState(false);
 // toggleIsAuthenticated(true) Deze is voor 2de opdracht nodig
 
+  const history=useHistory()
+  function signOut() {
+      toggleIsAuthenticated(false)
+      history.push("/")
+  }
+
   return (
     <div>
         <nav>
             <ul className="nav-container">
-                <li>
-                    <NavLink to="/" exact activeClassName="active-link">Home</NavLink>
-                </li>
-                <li>
-                    <NavLink to="/login"  activeClassName="active-link">Login</NavLink>
-                </li>
-
-                <li>
-                    <NavLink to="/blogposts" exact activeClassname="active-link">Blogpost</NavLink>
-                </li>
+                <li><NavLink to="/" exact activeClassName="active-link">Home</NavLink></li>
+                <li><NavLink to="/login"  activeClassName="active-link">Login</NavLink></li>
+                {isAuthenticated ? <>
+                    <li><NavLink to="/blogposts" exact activeClassname="active-link">Blogpost</NavLink></li>
+                    <button type="button" onClick={signOut}>Uitloggen</button>
+                    </>
+                    : ""}
             </ul>
         </nav>
         <Switch>
@@ -57,14 +61,15 @@ function App() {
                 <HomePage />
             </Route>
             <Route exact path="/login">
-                <LoginPage />
+                <LoginPage toggleAuth={isAuthenticated} toggleAuth={toggleIsAuthenticated}/>
             </Route>
             <Route path="/blogposts/:blogId">
                 <BlogOverviewPage />
             </Route>
-            <Route>
+             <Route>
                 <BlogPostsPage exact path="/blogposts"/>
             </Route>
+
         </Switch>
     </div>
   );

@@ -2,12 +2,15 @@ import React from 'react';
 import {NavLink, useHistory} from "react-router-dom";
 import {logDOM} from "@testing-library/react";
 
-const Login = () => {
+const Login = ({toggleAuth, isAuth}) => {
 
     const history=useHistory();
 
     function SignIn() {
+
+        toggleAuth(true)
         history.push("/blogposts");
+        console.log(isAuth)
     }
     return (
         <div>
