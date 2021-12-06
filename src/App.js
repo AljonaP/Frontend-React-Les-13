@@ -61,7 +61,7 @@ function App() {
                 <HomePage />
             </Route>
             <Route exact path="/login">
-                <LoginPage toggleAuth={isAuthenticated} toggleAuth={toggleIsAuthenticated}/>
+                <LoginPage isAuth={isAuthenticated} toggleAuth={toggleIsAuthenticated}/>
             </Route>
             <Route path="/blogposts/:blogId">
                 <BlogOverviewPage />
